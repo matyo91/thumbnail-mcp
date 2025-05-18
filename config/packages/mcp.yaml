@@ -1,0 +1,20 @@
+mcp:
+    app: 'app' # Application name to be exposed to clients
+    version: '1.0.0' # Application version to be exposed to clients
+
+    # Configure this application to act as an MCP server
+    # Currently exposes tools registered in LLM Chain
+    client_transports:
+        stdio: true # Enable STDIO via command
+        sse: true # Enable Server-Sent Event via controller
+    
+    # Configure MCP servers to be used by this application
+    # Not implemented yet
+    # servers:
+    #     name:
+    #         transport: 'stdio' # Transport method to use, either 'stdio' or 'sse'
+    #         stdio:
+    #             command: 'php /path/bin/console mcp' # Command to execute to start the client
+    #             arguments: [] # Arguments to pass to the command
+    #         sse:
+    #             url: 'http://localhost:8000/sse' # URL to SSE endpoint of MCP server
