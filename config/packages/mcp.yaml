@@ -1,5 +1,5 @@
 mcp:
-    app: 'app' # Application name to be exposed to clients
+    app: 'thumbnail-generator' # Application name to be exposed to clients
     version: '1.0.0' # Application version to be exposed to clients
 
     # Configure this application to act as an MCP server

@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    replicate.api_key: '%env(REPLICATE_API_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -20,6 +21,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # Register the Clock implementation
+    Symfony\Component\Clock\ClockInterface:
+        class: Symfony\Component\Clock\Clock
+
+    # Configure Replicate Client
+    App\Bridge\Replicate\Client:
+        arguments:
+            $httpClient: '@Symfony\Contracts\HttpClient\HttpClientInterface'
+            $clock: '@Symfony\Component\Clock\ClockInterface'
+            $apiKey: '%replicate.api_key%'
+
     # Add the toolbox interface implementation
     PhpLlm\LlmChain\Chain\Toolbox\ToolboxInterface:
         class: PhpLlm\LlmChain\Chain\Toolbox\Toolbox
@@ -30,6 +42,8 @@ services:
     # Tag our tool 
     App\Tool\ThumbnailTool:
         autowire: true
+        arguments:
+            - '@App\Bridge\Replicate\Client'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
